@@ -5,8 +5,11 @@ import time
 # URL de votre webhook Discord
 WEBHOOK_URL = 'https://discord.com/api/webhooks/1255906181248188497/eA1RFrQG68T5vH80HkLbB9hWsfXTOwqlK_JQR04kChbS-GDKnzZVSCnfjhfCsP8CbCIf'
 
+# Nom du serveur Dofus visé
+DOFUS_SERVER = "Draconiros"
+
 # URL du serveur Flask pour récupérer les données
-FLASK_SERVER_URL = 'http://127.0.0.1:5000/portals?server=Draconiros'
+FLASK_SERVER_URL = 'http://127.0.0.1:5000/portals?server='+DOFUS_SERVER
 
 # Dernier message envoyé pour mettre à jour plutôt qu'envoyer un nouveau
 last_message_id = "1255906462337601576"
@@ -15,17 +18,27 @@ def send_discord_message(portal_data):
     global last_message_id
 
     embeds = []
+    embed = {
+        "title": "Informations",
+        "color": 3447003,
+        "fields": [
+            {"name": "Server", "value": DOFUS_SERVER, "inline": False},
+            {"name": "Copyright", "value": "Based on Vulbis.com API \n Dev by [@Initialisation](https://github.com/initialisation)", "inline": False}
+        ]
+    }
+    embeds.append(embed)
+
     for data in portal_data:
         embed = {
-            "title": f"Portal: {data['portal']}",
+            "title": f"{data['portal']}",
             "color": 3447003,
             "fields": [
-                {"name": "Server", "value": data['server'], "inline": False},
-                {"name": "Position", "value": data['position'], "inline": False},
+                {"name": "Position", "value": "/travel ["+data['position']+"]", "inline": False},
                 {"name": "Updated", "value": data['updated'], "inline": False}
             ]
         }
         embeds.append(embed)
+
     
     payload = {
         "embeds": embeds
