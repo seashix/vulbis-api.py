@@ -4,6 +4,10 @@ from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 
+@app.route('/')
+def home():
+    return render_template('home.html')
+
 def fetch_portal_data(server, portal):
     url = 'https://www.vulbis.com/portal.php'
     data = {
@@ -45,6 +49,9 @@ def fetch_portal_data(server, portal):
         'position': position,
         'updated': time_info
     }
+
+@app.route('/')
+
 
 @app.route('/portals', methods=['GET'])
 def get_all_portal_data():
