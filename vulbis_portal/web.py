@@ -58,5 +58,8 @@ def get_all_portal_data():
     
     return jsonify(all_data)
 
+def run_flask_server():
+    app.run(debug=False, port=9952, use_reloader=False)  # Remplacez 5001 par le port de votre choix et désactivez le reloader
+
 if __name__ == '__main__':
-    app.run(debug=False, port=9952)
+    run_flask_server()
